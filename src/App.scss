@@ -1,0 +1,197 @@
+.App {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  header {
+    height: 12vh;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+    .logo {
+      span {
+        display: flex;
+        align-items: center;
+        img {
+          width: 70px;
+          height: 70px;
+        }
+        p {
+          color: #D89D6A;
+          margin-left: 15px;
+          font-size: 2.4rem;
+          text-transform: capitalize;
+          font-weight: bolder;
+        }
+      }
+    }
+    button {
+      border: none;
+      margin: 5px;
+      background: #9BC995;
+      color: #0C120C;
+      padding: 1rem 3rem;
+      font-size: 1.3rem;
+      font-weight: 700;
+      border-radius: 9999px;
+    }
+  }
+  .count {
+    margin-top: 5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .count_single {
+      width: 30%;
+      height: 10rem;
+      border-radius: 20px;
+      padding: 1rem;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-rows: repeat(6, 1fr);
+      grid-column-gap: 0px;
+      grid-row-gap: 0px;
+      &.tasks {
+        background: #222E50;
+        p {
+          color: #646d85;
+        }
+      }
+      &.storage {
+        background: #255F85;
+        p {
+          color: #668faa;
+        }
+      }
+      &.balance {
+        background: #258EA6;
+        p {
+          color: #66b0c1;
+        }
+      }
+      h1 {
+        grid-area: 1/1;
+        color: #F0F2EF;
+        font-weight: 900;
+        margin: 0;
+      }
+      p {
+        grid-area: 5/6/6/5;
+        text-transform: uppercase;
+        font-size: 1.3rem;
+        margin: 0;
+        font-weight: 900;
+        font-family: 'Lato', sans-serif;
+      }
+    }
+  }
+  main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5rem;
+    form {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      align-items: center;
+      span {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 4rem;
+        label {
+          input[type=text] {
+            width: 25rem;
+            height: 3.5rem;
+            padding: 15px 20px;
+            box-sizing: border-box;
+            margin-left: 10px;
+            border: 1px solid #9BC995;
+            border-radius: 9999px;
+            background: transparent;
+            color: #9BC995;
+            font-weight: 400;
+            &:active, &:focus {
+              border: none;
+              box-shadow: none;
+            }
+          }
+          input[type=date] {
+            width: 10rem;
+            height: 3.5rem;
+            padding: 15px 20px;
+            box-sizing: border-box;
+            margin-left: 10px;
+            border: 1px solid #9BC995;
+            border-radius: 9999px;
+            background: transparent;
+            color: #9BC995;
+            font-weight: 500;
+            &:active, &:focus {
+              border: none;
+              box-shadow: none;
+            }
+          }
+        }
+      }
+      input[type=submit] {
+        width: 30%;
+        border: none;
+        background: #9BC995;
+        color: #0C120C;
+        padding: 1rem 3rem;
+        font-size: 1.3rem;
+        font-weight: 700;
+        border-radius: 9999px;
+        cursor: pointer;
+      }
+    }
+    .todo_list {
+      margin-top: 4rem;
+      width: 100%;
+      h2 {
+        display: flex;
+        align-items: flex-start;
+      }
+      .list {
+        margin-top: 2rem;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .list_single {
+          width: 60%;
+          height: 8rem;
+          background: #242a24;
+          margin-bottom: 2rem;
+          border-radius: 20px;
+          position: relative;
+          padding: 1rem;
+          button {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background: transparent;
+            border: none;
+          }
+          .timer {
+            position: absolute;
+            right: 10px;
+            bottom: 5px;
+            margin: 0;
+          }
+          .created {
+            position: absolute;
+            left: 10px;
+            bottom: 5px;
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+}
