@@ -13,21 +13,26 @@
     "assert": "^2.0.0",
     "buffer": "^6.0.3",
     "near-api-js": "^0.44.2",
+    "node-polyfill-webpack-plugin": "^1.1.4",
     "process": "^0.11.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
+    "react-toastify": "^9.1.1",
     "sass": "^1.56.1",
     "web-vitals": "^2.1.4"
   },
+  "devDependencies": {
+    "react-app-rewired": "^2.1.11"
+  },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set WDS_SOCKET_PORT=0 && react-app-rewired start",
     "build": "run-s build:*",
-    "build:web": "react-scripts build",
+    "build:web": "react-app-rewired build",
     "build:contract": "cd contract && npm run build",
     "deploy": "cd contract && npm run deploy",
     "test": "npm run test:web && npm run test:contract",
-    "test:web": "react-scripts test",
+    "test:web": "react-app-rewired test",
     "test:contract": "cd contract && npm test",
     "eject": "react-scripts eject"
   },

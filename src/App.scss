@@ -18,7 +18,7 @@
           height: 70px;
         }
         p {
-          color: #D89D6A;
+          color: #d89d6a;
           margin-left: 15px;
           font-size: 2.4rem;
           text-transform: capitalize;
@@ -29,8 +29,8 @@
     button {
       border: none;
       margin: 5px;
-      background: #9BC995;
-      color: #0C120C;
+      background: #9bc995;
+      color: #0c120c;
       padding: 1rem 3rem;
       font-size: 1.3rem;
       font-weight: 700;
@@ -53,26 +53,26 @@
       grid-column-gap: 0px;
       grid-row-gap: 0px;
       &.tasks {
-        background: #222E50;
+        background: #222e50;
         p {
           color: #646d85;
         }
       }
       &.storage {
-        background: #255F85;
+        background: #255f85;
         p {
           color: #668faa;
         }
       }
       &.balance {
-        background: #258EA6;
+        background: #258ea6;
         p {
           color: #66b0c1;
         }
       }
       h1 {
-        grid-area: 1/1;
-        color: #F0F2EF;
+        grid-area: 1/6/1/1;
+        color: #f0f2ef;
         font-weight: 900;
         margin: 0;
       }
@@ -82,7 +82,7 @@
         font-size: 1.3rem;
         margin: 0;
         font-weight: 900;
-        font-family: 'Lato', sans-serif;
+        font-family: "Lato", sans-serif;
       }
     }
   }
@@ -104,45 +104,47 @@
         align-items: center;
         margin-bottom: 4rem;
         label {
-          input[type=text] {
+          input[type="text"] {
             width: 25rem;
             height: 3.5rem;
             padding: 15px 20px;
             box-sizing: border-box;
             margin-left: 10px;
-            border: 1px solid #9BC995;
+            border: 1px solid #9bc995;
             border-radius: 9999px;
             background: transparent;
-            color: #9BC995;
+            color: #9bc995;
             font-weight: 400;
-            &:active, &:focus {
+            &:active,
+            &:focus {
               border: none;
               box-shadow: none;
             }
           }
-          input[type=date] {
+          input[type="date"] {
             width: 10rem;
             height: 3.5rem;
             padding: 15px 20px;
             box-sizing: border-box;
             margin-left: 10px;
-            border: 1px solid #9BC995;
+            border: 1px solid #9bc995;
             border-radius: 9999px;
             background: transparent;
-            color: #9BC995;
+            color: #9bc995;
             font-weight: 500;
-            &:active, &:focus {
+            &:active,
+            &:focus {
               border: none;
               box-shadow: none;
             }
           }
         }
       }
-      input[type=submit] {
+      input[type="submit"] {
         width: 30%;
         border: none;
-        background: #9BC995;
-        color: #0C120C;
+        background: #9bc995;
+        color: #0c120c;
         padding: 1rem 3rem;
         font-size: 1.3rem;
         font-weight: 700;
@@ -153,12 +155,23 @@
     .todo_list {
       margin-top: 4rem;
       width: 100%;
-      h2 {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      h3 {
         display: flex;
         align-items: flex-start;
+        justify-content: center;
+        border-radius: 15px;
+        text-transform: lowercase;
+        padding: 0.8rem 1.5rem;
+        border: 1px solid #af3e4d;
+        background: transparent;
+        color: #af3e4d;
+        width: max-content;
+        margin-bottom: 2rem;
       }
       .list {
-        margin-top: 2rem;
         width: 100%;
         display: flex;
         flex-direction: column;
@@ -178,20 +191,71 @@
             background: transparent;
             border: none;
           }
+          .title {
+            text-transform: capitalize;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #868986;
+          }
+          .task {
+            color: #6d716e;
+          }
           .timer {
             position: absolute;
             right: 10px;
-            bottom: 5px;
+            bottom: 8px;
             margin: 0;
+            font-size: 14px;
+            text-transform: lowercase;
+            background: #d89c6a;
+            color: #0c120c;
+            padding: 2px 7px;
+            border-radius: 9999px;
           }
           .created {
             position: absolute;
             left: 10px;
-            bottom: 5px;
+            bottom: 8px;
             margin: 0;
+            font-size: 14px;
+            text-transform: lowercase;
+            background: #258ea6;
+            color: #0c120c;
+            padding: 2px 7px;
+            border-radius: 9999px;
           }
         }
       }
     }
   }
+}
+
+.intro {
+  text-align: center;
+  margin-top: 5rem;
+  h4 {
+    margin-bottom: 3rem;
+    color: #af3e4d;
+    text-transform: capitalize;
+    font-weight: 900;
+  }
+  ol {
+    margin-bottom: 3rem;
+    color: #868986;
+    li {
+      font-size: 1.3rem;
+    }
+  }
+  hr {
+    margin-bottom: 3rem;
+    opacity: 0.5;
+  }
+  p {
+    color: #868986;
+    font-size: 1.3rem;
+  }
+}
+
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
 }
