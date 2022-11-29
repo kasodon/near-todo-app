@@ -1,0 +1,36 @@
+{
+  "name": "Todo Near App",
+  "version": "1.0.0",
+  "description": "simple Todo smart contract example in React/Javascript",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "npm run build:initial && npm run build:contract",
+    "build:initial": "chmod +x build.sh",
+    "build:contract": "./build.sh",
+    "deploy": "npm run deploy:initial && npm run deploy:contract",
+    "deploy:initial": "chmod +x deploy.sh",
+    "deploy:contract": "./deploy.sh",
+    "test": "ava --timeout=2m"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "Onyedika Edewor",
+  "license": "MIT",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "dependencies": {
+    "near-sdk-js": "^0.6.0",
+    "near-cli": "^3.4.0"
+  },
+  "devDependencies": {
+    "ava": "^4.3.3",
+    "near-workspaces": "^3.2.2",
+    "npm-run-all": "^4.1.5",
+    "ts-morph": "^16.0.0"
+  }
+}
