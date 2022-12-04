@@ -1,0 +1,24 @@
+.preloader {
+  width: 100vw;
+  height: 100vh;
+  max-width: 90vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  svg {
+    width: 561px;
+    height: 560px;
+    path {
+      animation: paint 0.5s linear 1s infinite alternate;
+    }
+  }
+}
+
+@keyframes paint {
+  from {
+    transform: scale(0.7);
+  }
+  to {
+    transform: scale(1);
+  }
+}

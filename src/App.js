@@ -1,16 +1,60 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { toast, ToastContainer } from "react-toastify";
+import ReactCanvasConfetti from "react-canvas-confetti";
 import "./App.scss";
+import Preloader from './preloader';
 import logo from "./logo.svg";
 import del from "./delete.svg";
 
+const canvasStyles = {
+  position: "fixed",
+  pointerEvents: "none",
+  width: "100%",
+  height: "100%",
+  top: 0,
+  left: 0
+};
+
+function getAnimationSettings(angle, originX) {
+  return {
+    particleCount: 1,
+    angle,
+    spread: 100,
+    origin: { x: originX },
+    colors: ["#9bc995", "#ffffff"]
+  };
+}
+
 function App({ isSignedIn, contractId, wallet }) {
+  const [loading, setLoading] = useState(false);
   const [todos, setTodos] = useState();
   const [title, setTitle] = useState("");
   const [task, setTask] = useState("");
   const [deadline, setDeadline] = useState("");
   const [account, setAccount] = useState([]);
+  const refAnimationInstance = useRef(null);
+  const [intervalId, setIntervalId] = useState();
   const accountId = wallet.accountId;
+
+  const getInstance = useCallback((instance) => {
+    refAnimationInstance.current = instance;
+  }, []);
+
+  const nextTickAnimation = useCallback(() => {
+    if (refAnimationInstance.current) {
+      refAnimationInstance.current(getAnimationSettings(60, 0));
+      refAnimationInstance.current(getAnimationSettings(120, 1));
+    }
+  }, []);
+
+  const startAnimation = useCallback(() => {
+    if (!intervalId) {
+          setIntervalId(setInterval(nextTickAnimation, 18))
+      setTimeout(() => {
+        window.location.reload();
+      }, 5000);
+    }
+  }, [nextTickAnimation, intervalId]);
 
   // converting NEAR date to human-readable date
   function formatDate(a) {
@@ -45,6 +89,7 @@ function App({ isSignedIn, contractId, wallet }) {
   async function getTodo() {
     // use the wallet to query the contract's
     const todo = await wallet.viewMethod({ method: "getTodo", contractId });
+    console.log(todo);
     return todo;
   }
 
@@ -56,15 +101,15 @@ function App({ isSignedIn, contractId, wallet }) {
   }
 
   // Create a task function
-  function createTodo(e) {
+  async function createTodo(e) {
     e.preventDefault();
+    await setLoading(true)
     const date = new Date(deadline);
     const parsedDate = Date.parse(date);
-    // use the wallet to send the greeting to the contract
     wallet
       .callMethod({
         method: "addTodo",
-        args: { title: title, task: task, deadline: parsedDate },
+        args: { title: title, task: task, deadline: parsedDate, completed: false },
         contractId,
       })
       .then(async () => {
@@ -75,6 +120,9 @@ function App({ isSignedIn, contractId, wallet }) {
         return getAccount();
       })
       .then(setAccount)
+        .then(async () => {
+          return setLoading(false);
+        })
       .finally(() => {
         toast("Task Created Successfully!", {
           position: "top-right",
@@ -90,9 +138,9 @@ function App({ isSignedIn, contractId, wallet }) {
   }
 
   // Delete a task function
-  function deleteTodo(index, e) {
+  async function deleteTodo(index, e) {
     e.preventDefault();
-    // use the wallet to send the greeting to the contract
+    await setLoading(true)
     wallet
       .callMethod({ method: "deleteTodo", args: { id: index }, contractId })
       .then(async () => {
@@ -102,7 +150,12 @@ function App({ isSignedIn, contractId, wallet }) {
       .then(async () => {
         return getAccount();
       })
-      .then(setAccount)
+      .then(
+          setAccount
+      )
+        .then(async () => {
+          return setLoading(false);
+        })
       .finally(() => {
         toast("Task Deleted Successfully!", {
           position: "top-right",
@@ -117,8 +170,44 @@ function App({ isSignedIn, contractId, wallet }) {
       });
   }
 
+  const todoCompleted = async (index, title, task, deadline) => {
+    await setLoading(true)
+    wallet
+        .callMethod({
+          method: "updateTodo",
+          args: { index: index, title: title, task: task, deadline: deadline, completed: true },
+          contractId,
+        })
+        .catch(alert)
+        .then(async () => {
+          return getTodo();
+        })
+        .then(setTodos)
+        .then(async () => {
+          return setLoading(false);
+        })
+        .then(async () => {
+          toast("Hurray! Task Successfully Completed!", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+        })
+        .finally(() => {
+          startAnimation()
+        });
+  };
+
   return (
-    <div className="App">
+      <>
+        { loading ?
+            <Preloader loading={loading} />
+    : <div className="App">
       <header>
         <div className="logo">
           <span>
@@ -139,7 +228,6 @@ function App({ isSignedIn, contractId, wallet }) {
         </div>
       </header>
       <>
-        {" "}
         {isSignedIn ? (
           <>
             <div className="count">
@@ -191,9 +279,19 @@ function App({ isSignedIn, contractId, wallet }) {
                 <div className="list">
                   {todos?.map((todo, index) => (
                     <div className="list_single" key={index}>
+                      <div className="cta">
+                       {!todo.completed ?
+                           <span onClick={() => todoCompleted(index, todo.title, todo.task, todo.deadline)}><input type="checkbox" id="completed"  defaultChecked={false} />
+                        <label htmlFor="completed">Completed!</label></span>
+                          :
+                           <span><input type="checkbox" id="completed"  defaultChecked={true} disabled />
+                          <label htmlFor="completed">Completed!</label></span>
+                      }
+
                       <button onClick={(e) => deleteTodo(index, e)}>
                         <img src={del} alt="near delete icon" />
                       </button>
+                      </div>
                       <h4 className="title">{todo.title}</h4>
                       <p className="task">{todo.task}</p>
                       <p className="created">
@@ -273,7 +371,10 @@ function App({ isSignedIn, contractId, wallet }) {
         )}
       </>
       <ToastContainer />
+      <ReactCanvasConfetti refConfetti={getInstance} style={canvasStyles} />
     </div>
+        }
+      </>
   );
 }
 

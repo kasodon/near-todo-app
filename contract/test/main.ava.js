@@ -27,15 +27,15 @@ test.afterEach.always(async (t) => {
   });
 });
 
-test("should save name and value object and return on view method", async (t) => {
+test("should save todo list object and return object on view method", async (t) => {
   const { test, alice } = t.context.accounts;
 
   // Call the contract method
-  await alice.call(test, "addObjecttoVector", { name: "test", value: "test" });
+  await alice.call(test, "addTodo", { title: "deploy contract", task: "build a Defi project on near", deadline: "1669699272000", completed: false });
 
   // Call the contract view method
-  const result = await test.view("getVector");
+  const result = await test.view("getTodo");
 
   // Check the result
-  t.deepEqual(result, [{ name: "test", value: "test" }]);
+  t.deepEqual(result[0].id, 1);
 });

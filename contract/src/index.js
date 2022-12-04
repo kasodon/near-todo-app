@@ -18,10 +18,10 @@ class TodoNear {
   }
 
   @call({})
-  addTodo({ title, task, deadline }) {
+  addTodo({ title, task, deadline, completed }) {
     const id = this.getTodo().length + 1;
     const timeCreated = near.blockTimestamp().toString();
-    const object = { id, title, task, deadline, timeCreated };
+    const object = { id, title, task, deadline, completed, timeCreated };
     this.todo.push(object);
   }
 

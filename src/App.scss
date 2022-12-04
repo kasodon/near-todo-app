@@ -184,12 +184,27 @@
           border-radius: 20px;
           position: relative;
           padding: 1rem;
-          button {
+          .cta {
             position: absolute;
             right: 10px;
             top: 10px;
-            background: transparent;
-            border: none;
+            width: 30%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            span {
+              label {
+                font-size: 1.5rem;
+                font-weight: 900;
+                color: #868986;
+                display: flex;
+                align-items: center;
+              }
+            }
+            button {
+              background: transparent;
+              border: none;
+            }
           }
           .title {
             text-transform: capitalize;
@@ -254,6 +269,51 @@
     color: #868986;
     font-size: 1.3rem;
   }
+}
+
+input[type="checkbox"] {
+  position: absolute;
+  clip: rect(0,0,0,0);
+}
+
+input[type="checkbox"] + label::before {
+  content: '\a0';
+  display: inline-block;
+  vertical-align: .2em;
+  width: 1em;
+  height: 1em;
+  margin-right: .5em;
+  border-radius: .2em;
+  background: silver;
+  text-indent: .15em;
+  line-height: 1;
+  cursor: pointer;
+}
+
+input[type="checkbox"] + label {
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked + label::before, input[type="checkbox"]:checked + label {
+  opacity: .8;
+  cursor: not-allowed;
+}
+
+input[type="checkbox"]:checked + label::before {
+  content: '\2713';
+  background: #7CEA9C;
+  color: #080F0F;
+}
+
+input[type="checkbox"]:focus + label::before {
+  box-shadow: 0 0 .1em .1em #47682C;
+}
+
+input[type="checkbox"]:disabled + label::before {
+  background: #7CEA9C;
+  box-shadow: none;
+  color: #080F0F;
+  cursor: not-allowed;
 }
 
 ::-webkit-calendar-picker-indicator {
