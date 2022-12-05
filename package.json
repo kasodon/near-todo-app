@@ -28,7 +28,7 @@
   },
   "scripts": {
     "start": "set WDS_SOCKET_PORT=0 && react-app-rewired start",
-    "build": "npm run build:web && npm run build:contract",
+    "build": "npm run build:contract && npm run build:web",
     "build:web": "react-app-rewired build",
     "build:contract": "cd contract && npm run build",
     "deploy": "cd contract && npm run deploy",
