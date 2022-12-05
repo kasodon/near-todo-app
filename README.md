@@ -12,10 +12,6 @@ In the root project directory, run:
 
 ### `npm install`
 
-Run also In the root project directory, run:
-
-### `npm run contract`
-
 Installs all the project dependencies.
 
 ### `npm run build`
