@@ -5,7 +5,7 @@ import reportWebVitals from "./reportWebVitals";
 import "./index.scss";
 import "react-toastify/dist/ReactToastify.css";
 import { Wallet } from "./near-wallet";
-const CONTRACT_ADDRESS = ""; // Your smart contract accountId
+const CONTRACT_ADDRESS = "todoapp.testnet"; // Your smart contract accountId
 const wallet = new Wallet({ createAccessKeyFor: CONTRACT_ADDRESS });
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
