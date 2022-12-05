@@ -18,6 +18,15 @@ body {
   font-family: "Fugaz One", cursive;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  @media only screen and (max-width: 768px) {
+    padding: 0 3rem;
+  }
+  @media only screen and (max-width: 612px) {
+    padding: 0 2rem;
+  }
+  @media only screen and (max-width: 425px) {
+    padding: 0 1rem;
+  }
 }
 
 ::selection {
@@ -40,25 +49,33 @@ h6 {
 h1 {
   font-size: 3.5rem;
   line-height: 60px;
-  // @media only screen and (max-width: 600px) { font-size: 2.8rem; }
 }
 
 h2 {
   font-size: 2.8rem;
   line-height: 48px;
-  // @media only screen and (max-width: 600px) { font-size: 2.4rem; }
 }
 
 h3 {
   font-size: 2.3rem;
   line-height: 34px;
-  // @media only screen and (max-width: 600px) { font-size: 1.9rem; }
 }
 
 h4 {
   font-size: 2rem;
   line-height: 30px;
-  // @media only screen and (max-width: 600px) { font-size: 1.4rem; }
+  @media only screen and (max-width: 768px) {
+    font-size: 1.7rem;
+    line-height: 26px;
+  }
+  @media only screen and (max-width: 525px) {
+    font-size: 1.4rem;
+    line-height: 21px;
+  }
+  @media only screen and (max-width: 385px) {
+    font-size: 1.1rem;
+    line-height: 18px;
+  }
 }
 
 a {
