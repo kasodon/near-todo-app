@@ -28,6 +28,7 @@ function getAnimationSettings(angle, originX) {
 function App({ isSignedIn, contractId, wallet }) {
   const [loading, setLoading] = useState(false);
   const [todos, setTodos] = useState();
+  const [todoLength, setTodoLength] = useState();
   const [title, setTitle] = useState("");
   const [task, setTask] = useState("");
   const [deadline, setDeadline] = useState("");
@@ -88,9 +89,13 @@ function App({ isSignedIn, contractId, wallet }) {
   // Get todo function
   async function getTodo() {
     // use the wallet to query the contract's
-    const todo = await wallet.viewMethod({ method: "getTodo", contractId });
-    console.log(todo);
-    return todo;
+    const res = await wallet.viewMethod({ method: "getTodo", contractId });
+    const currentTodo = res.filter(function(todo) {
+      return todo.accountId === accountId;
+    });
+    setTodoLength(currentTodo)
+    console.log(res);
+    return res;
   }
 
   // Get smart contract account details function
@@ -107,9 +112,9 @@ function App({ isSignedIn, contractId, wallet }) {
     const date = new Date(deadline);
     const parsedDate = Date.parse(date);
     wallet
-      .callMethod({
+      .createMethod({
         method: "addTodo",
-        args: { title: title, task: task, deadline: parsedDate, completed: false },
+        args: { title: title, task: task, deadline: parsedDate, completed: false, accountId: accountId },
         contractId,
       })
       .then(async () => {
@@ -175,7 +180,7 @@ function App({ isSignedIn, contractId, wallet }) {
     wallet
         .callMethod({
           method: "updateTodo",
-          args: { index: index, title: title, task: task, deadline: deadline, completed: true },
+          args: { index: index, title: title, task: task, deadline: deadline, completed: true, accountId: accountId },
           contractId,
         })
         .catch(alert)
@@ -232,7 +237,7 @@ function App({ isSignedIn, contractId, wallet }) {
           <>
             <div className="count">
               <div className="count_single tasks">
-                <h1>{todos?.length || 0}</h1>
+                <h1>{todoLength?.length || 0}</h1>
                 <p>total tasks</p>
               </div>
               <div className="count_single storage">
@@ -278,29 +283,61 @@ function App({ isSignedIn, contractId, wallet }) {
                 <h3>Tasks Created</h3>
                 <div className="list">
                   {todos?.map((todo, index) => (
-                    <div className="list_single" key={index}>
-                      <div className="cta">
-                       {!todo.completed ?
-                           <span onClick={() => todoCompleted(index, todo.title, todo.task, todo.deadline)}><input type="checkbox" id="completed"  defaultChecked={false} />
+                      todo.accountId !== accountId
+                          ? (
+                              <div className="list_single" key={index} style={{ display: "none" }}>
+                                <div className="cta">
+                                  {!todo.completed ?
+                                      <span
+                                          onClick={() => todoCompleted(index, todo.title, todo.task, todo.deadline)}><input
+                                          type="checkbox" id="completed" defaultChecked={false}/>
                         <label htmlFor="completed">Completed!</label></span>
-                          :
-                           <span><input type="checkbox" id="completed"  defaultChecked={true} disabled />
+                                      :
+                                      <span><input type="checkbox" id="completed" defaultChecked={true} disabled/>
                           <label htmlFor="completed">Completed!</label></span>
-                      }
+                                  }
 
-                      <button onClick={(e) => deleteTodo(index, e)}>
-                        <img src={del} alt="near delete icon" />
-                      </button>
-                      </div>
-                      <h4 className="title">{todo.title}</h4>
-                      <p className="task">{todo.task}</p>
-                      <p className="created">
-                        Created on: {formatDateCreated(todo.timeCreated)}
-                      </p>
-                      <p className="timer">
-                        Deadline: {formatDate(todo.deadline)}
-                      </p>
-                    </div>
+                                  <button onClick={(e) => deleteTodo(index, e)}>
+                                    <img src={del} alt="near delete icon"/>
+                                  </button>
+                                </div>
+                                <h4 className="title">{todo.title}</h4>
+                                <p className="task">{todo.task}</p>
+                                <p className="created">
+                                  Created on: {formatDateCreated(todo.timeCreated)}
+                                </p>
+                                <p className="timer">
+                                  Deadline: {formatDate(todo.deadline)}
+                                </p>
+                              </div>
+                          )
+                          : (
+                              <div className="list_single" key={index}>
+                                <div className="cta">
+                                  {!todo.completed ?
+                                      <span
+                                          onClick={() => todoCompleted(index, todo.title, todo.task, todo.deadline)}><input
+                                          type="checkbox" id="completed" defaultChecked={false}/>
+                        <label htmlFor="completed">Completed!</label></span>
+                                      :
+                                      <span><input type="checkbox" id="completed" defaultChecked={true} disabled/>
+                          <label htmlFor="completed">Completed!</label></span>
+                                  }
+
+                                  <button onClick={(e) => deleteTodo(index, e)}>
+                                    <img src={del} alt="near delete icon"/>
+                                  </button>
+                                </div>
+                                <h4 className="title">{todo.title}</h4>
+                                <p className="task">{todo.task}</p>
+                                <p className="created">
+                                  Created on: {formatDateCreated(todo.timeCreated)}
+                                </p>
+                                <p className="timer">
+                                  Deadline: {formatDate(todo.deadline)}
+                                </p>
+                              </div>
+                          )
                   ))}
                 </div>
               </div>

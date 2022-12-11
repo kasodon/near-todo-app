@@ -29,7 +29,7 @@ The compiled WASM file will be deployed to the NEAR testnet
 
 ### `npm start`
 
-Before starting the project, go to `src/index.js` and insert your <your-example-contract.testnet-account-id> in the CONTRACT_ADDRESS variable. Then run npm start.s 
+Before starting the project, go to `src/index.ts` and insert your <your-example-contract.testnet-account-id> in the CONTRACT_ADDRESS variable. Then run npm start.s 
 
 ### `npm run test`
 

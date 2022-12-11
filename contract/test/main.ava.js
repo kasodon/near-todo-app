@@ -31,7 +31,7 @@ test("should save todo list object and return object on view method", async (t) 
   const { test, alice } = t.context.accounts;
 
   // Call the contract method
-  await alice.call(test, "addTodo", { title: "deploy contract", task: "build a Defi project on near", deadline: "1669699272000", completed: false });
+  await alice.call(test, "addTodo", { title: "deploy contract", task: "build a Defi project on near", deadline: 1669699272000, completed: false, accountId: alice });
 
   // Call the contract view method
   const result = await test.view("getTodo");
