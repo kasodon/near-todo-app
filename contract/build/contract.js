@@ -512,23 +512,6 @@ function input() {
   env.input(0);
   return env.read_register(0);
 }
-/**
- * Create a NEAR promise which will have multiple promise actions inside.
- *
- * @param accountId - The account ID of the target contract.
- */
-function promiseBatchCreate(accountId) {
-  return env.promise_batch_create(accountId);
-}
-/**
- * Attach a transfer promise action to the NEAR promise index with the provided promise index.
- *
- * @param promiseIndex - The index of the promise to attach a transfer action to.
- * @param amount - The amount of NEAR to transfer.
- */
-function promiseBatchActionTransfer(promiseIndex, amount) {
-  env.promise_batch_action_transfer(promiseIndex, amount);
-}
 
 /**
  * Tells the SDK to expose this function as a view function.
@@ -803,7 +786,6 @@ var _dec, _dec2, _dec3, _dec4, _dec5, _class, _class2;
 let TodoNear = (_dec = NearBindgen({}), _dec2 = view(), _dec3 = call({}), _dec4 = call({
   payableFunction: true
 }), _dec5 = call({}), _dec(_class = (_class2 = class TodoNear {
-  contract = "todolist.testnet";
   constructor() {
     this.todo = new Vector("a");
   }
@@ -823,7 +805,6 @@ let TodoNear = (_dec = NearBindgen({}), _dec2 = view(), _dec3 = call({}), _dec4 
     accountId
   }) {
     const nearAttachedAmount = attachedDeposit();
-    let toTransfer = nearAttachedAmount;
     assert(nearAttachedAmount >= TODO_AMOUNT, "Must attach upto 0.1 NEAR");
     const id = this.getTodo().length + 1;
     const timeCreated = blockTimestamp().toString();
@@ -837,8 +818,6 @@ let TodoNear = (_dec = NearBindgen({}), _dec2 = view(), _dec3 = call({}), _dec4 
       timeCreated
     };
     this.todo.push(object);
-    const promise = promiseBatchCreate(this.contract);
-    promiseBatchActionTransfer(promise, toTransfer);
   }
   updateTodo({
     index,
